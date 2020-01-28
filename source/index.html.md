@@ -29,6 +29,12 @@ This example API documentation page was created with [Slate](https://github.com/
 
 > To authorize, use this code:
 
+```javascript
+const userbaser = require("userbaser");
+
+let api = userbaser.authorize("meowmeowmeow");
+```
+
 ```ruby
 require 'userbaser'
 
@@ -45,12 +51,6 @@ api = userbaser.authorize('meowmeowmeow')
 # With shell, you can just pass the correct header with each request
 curl "api_endpoint_here"
   -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const userbaser = require("userbaser");
-
-let api = userbaser.authorize("meowmeowmeow");
 ```
 
 > Make sure to replace `meowmeowmeow` with your API key.
