@@ -19,7 +19,7 @@ search: true
 
 # Introduction
 
-Welcome to Userbaser! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to Userbaser! You can use our API to access Usrbsr API endpoints, which can get information on various cats, users, and breeds in our database.
 
 We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
@@ -30,15 +30,15 @@ This example API documentation page was created with [Slate](https://github.com/
 > To authorize, use this code:
 
 ```ruby
-require 'kittn'
+require 'userbaser'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+api = Usrbsr::APIClient.authorize!('meowmeowmeow')
 ```
 
 ```python
-import kittn
+import userbaser
 
-api = kittn.authorize('meowmeowmeow')
+api = userbaser.authorize('meowmeowmeow')
 ```
 
 ```shell
@@ -48,16 +48,16 @@ curl "api_endpoint_here"
 ```
 
 ```javascript
-const kittn = require("kittn");
+const userbaser = require("userbaser");
 
-let api = kittn.authorize("meowmeowmeow");
+let api = userbaser.authorize("meowmeowmeow");
 ```
 
 > Make sure to replace `meowmeowmeow` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Usrbsr uses API keys to allow access to the API. You can register a new Usrbsr API key at our [developer portal](http://example.com/developers).
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+Usrbsr expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
 `Authorization: meowmeowmeow`
 
@@ -65,34 +65,34 @@ Kittn expects for the API key to be included in all API requests to the server i
 You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
 
-# Kittens
+# Users
 
-## Get All Kittens
+## Get All Users
 
 ```ruby
-require 'kittn'
+require 'userbaser'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+api = Usrbsr::APIClient.authorize!('meowmeowmeow')
+api.users.get
 ```
 
 ```python
-import kittn
+import userbaser
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+api = userbaser.authorize('meowmeowmeow')
+api.users.get()
 ```
 
 ```shell
-curl "http://example.com/api/kittens"
+curl "http://example.com/api/users"
   -H "Authorization: meowmeowmeow"
 ```
 
 ```javascript
-const kittn = require("kittn");
+const userbaser = require("userbaser");
 
-let api = kittn.authorize("meowmeowmeow");
-let kittens = api.kittens.get();
+let api = userbaser.authorize("meowmeowmeow");
+let users = api.users.get();
 ```
 
 > The above command returns JSON structured like this:
@@ -116,49 +116,49 @@ let kittens = api.kittens.get();
 ]
 ```
 
-This endpoint retrieves all kittens.
+This endpoint retrieves all users.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET http://example.com/api/users`
 
 ### Query Parameters
 
-| Parameter    | Default | Description                                                                      |
-| ------------ | ------- | -------------------------------------------------------------------------------- |
-| include_cats | false   | If set to true, the result will also include cats.                               |
-| available    | true    | If set to false, the result will include kittens that have already been adopted. |
+| Parameter    | Default | Description                                                                    |
+| ------------ | ------- | ------------------------------------------------------------------------------ |
+| include_cats | false   | If set to true, the result will also include cats.                             |
+| available    | true    | If set to false, the result will include users that have already been adopted. |
 
 <aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+Remember — a happy user is an authenticated user!
 </aside>
 
-## Get a Specific Kitten
+## Get a Specific User
 
 ```ruby
-require 'kittn'
+require 'userbaser'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+api = Usrbsr::APIClient.authorize!('meowmeowmeow')
+api.users.get(2)
 ```
 
 ```python
-import kittn
+import userbaser
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+api = userbaser.authorize('meowmeowmeow')
+api.users.get(2)
 ```
 
 ```shell
-curl "http://example.com/api/kittens/2"
+curl "http://example.com/api/users/2"
   -H "Authorization: meowmeowmeow"
 ```
 
 ```javascript
-const kittn = require("kittn");
+const userbaser = require("userbaser");
 
-let api = kittn.authorize("meowmeowmeow");
-let max = api.kittens.get(2);
+let api = userbaser.authorize("meowmeowmeow");
+let max = api.users.get(2);
 ```
 
 > The above command returns JSON structured like this:
@@ -173,47 +173,47 @@ let max = api.kittens.get(2);
 }
 ```
 
-This endpoint retrieves a specific kitten.
+This endpoint retrieves a specific user.
 
 <aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET http://example.com/users/<ID>`
 
 ### URL Parameters
 
-| Parameter | Description                      |
-| --------- | -------------------------------- |
-| ID        | The ID of the kitten to retrieve |
+| Parameter | Description                    |
+| --------- | ------------------------------ |
+| ID        | The ID of the user to retrieve |
 
-## Delete a Specific Kitten
+## Delete a Specific User
 
 ```ruby
-require 'kittn'
+require 'userbaser'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
+api = Usrbsr::APIClient.authorize!('meowmeowmeow')
+api.users.delete(2)
 ```
 
 ```python
-import kittn
+import userbaser
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
+api = userbaser.authorize('meowmeowmeow')
+api.users.delete(2)
 ```
 
 ```shell
-curl "http://example.com/api/kittens/2"
+curl "http://example.com/api/users/2"
   -X DELETE
   -H "Authorization: meowmeowmeow"
 ```
 
 ```javascript
-const kittn = require("kittn");
+const userbaser = require("userbaser");
 
-let api = kittn.authorize("meowmeowmeow");
-let max = api.kittens.delete(2);
+let api = userbaser.authorize("meowmeowmeow");
+let max = api.users.delete(2);
 ```
 
 > The above command returns JSON structured like this:
@@ -225,14 +225,14 @@ let max = api.kittens.delete(2);
 }
 ```
 
-This endpoint deletes a specific kitten.
+This endpoint deletes a specific user.
 
 ### HTTP Request
 
-`DELETE http://example.com/kittens/<ID>`
+`DELETE http://example.com/users/<ID>`
 
 ### URL Parameters
 
-| Parameter | Description                    |
-| --------- | ------------------------------ |
-| ID        | The ID of the kitten to delete |
+| Parameter | Description                  |
+| --------- | ---------------------------- |
+| ID        | The ID of the user to delete |
