@@ -6,7 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='https://userfront.com/signup'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -17,9 +17,11 @@ search: true
 
 # Introduction
 
-Welcome to Userbaser! You can use the Userbaser API to get information and perform actions on various users in your project.
+You can use the Userfront API to get information and perform actions on various users in your project.
 
 We have language bindings in Shell (Terminal), JavaScript, Ruby, and Python. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+
+<aside class="warning">These docs aren't quite ready yet. Check back soon!</aside>
 
 # Authentication
 
@@ -27,23 +29,23 @@ We have language bindings in Shell (Terminal), JavaScript, Ruby, and Python. You
 
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "https://api.userbaser.com/v0/status"
+curl "https://api.userfront.com/v0/status"
   -H "Authorization: Bearer ub_live_admin_abcdef_1234567890abcdefghijklmnopqrstuvwxyz"
 ```
 
 ```javascript
-const userbaser = require("userbaser");
+const userfront = require("userfront");
 
-let api = userbaser.authorize("meowmeowmeow");
+let api = userfront.authorize("meowmeowmeow");
 ```
 
 > Make sure to replace `ub_live_admin_...` with your Project Token.
 
 <a href="#" id="show-token">Show your Project Token</a>
 
-Userbaser uses API keys to allow access to the API. You can register a new Userbaser API key at our [developer portal](http://example.com/developers).
+Userfront uses API keys to allow access to the API. You can register a new Userfront API key at our [developer portal](http://example.com/developers).
 
-Userbaser expects for the API key to be included in all API requests to the server in a header that looks like the following:
+Userfront expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
 `Authorization: Bearer ub_live_admin_abcdef_1234567890abcdefghijklmnopqrstuvwxyz`
 
@@ -56,7 +58,7 @@ You must replace <code>ub_live_admin_abcdef_1234567890abcdefghijklmnopqrstuvwxyz
 ## Find Users
 
 ```shell
-curl "https://api.userbaser.com/v0/users/find"
+curl "https://api.userfront.com/v0/users/find"
   -H "Authorization: Bearer ub_live_admin_abcdef_1234567890abcdefghijklmnopqrstuvwxyz"
 ```
 
@@ -65,7 +67,7 @@ var request = require("request");
 
 var payload = {
   json: true,
-  uri: "https://api.userbaser.com/v0/users/find",
+  uri: "https://api.userfront.com/v0/users/find",
   body: {
     order: "createdAt_DESC",
     where: {
@@ -117,7 +119,7 @@ This endpoint finds users based on criteria in the request `body`. To retrieve a
 
 ### HTTP Request
 
-`POST https://api.userbaser.com/v0/users/find`
+`POST https://api.userfront.com/v0/users/find`
 
 ### Body Parameters
 
@@ -138,9 +140,9 @@ curl "http://example.com/api/users/2"
 ```
 
 ```javascript
-const userbaser = require("userbaser");
+const userfront = require("userfront");
 
-let api = userbaser.authorize("meowmeowmeow");
+let api = userfront.authorize("meowmeowmeow");
 let max = api.users.get(2);
 ```
 
@@ -179,9 +181,9 @@ curl "http://example.com/api/users/2"
 ```
 
 ```javascript
-const userbaser = require("userbaser");
+const userfront = require("userfront");
 
-let api = userbaser.authorize("meowmeowmeow");
+let api = userfront.authorize("meowmeowmeow");
 let max = api.users.delete(2);
 ```
 
