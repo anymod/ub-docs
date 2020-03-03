@@ -1,6 +1,6 @@
 # Errors
 
-The Userbaser API uses the following error codes:
+The Userfront API uses the following error codes:
 
 | Error Code | Meaning                                                                                      |
 | ---------- | -------------------------------------------------------------------------------------------- |

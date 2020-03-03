@@ -19,7 +19,7 @@ search: true
 
 You can use the Userfront API to get information and perform actions on various users in your project.
 
-We have language bindings in Shell (Terminal), JavaScript, Ruby, and Python. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings in Shell (Terminal) and JavaScript. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 <aside class="warning">These docs aren't quite ready yet. Check back soon!</aside>
 
@@ -30,7 +30,7 @@ We have language bindings in Shell (Terminal), JavaScript, Ruby, and Python. You
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "https://api.userfront.com/v0/status"
-  -H "Authorization: Bearer ub_live_admin_abcdef_1234567890abcdefghijklmnopqrstuvwxyz"
+  -H "Authorization: Bearer uf_live_admin_abcdef_123456abcdef"
 ```
 
 ```javascript
@@ -39,7 +39,7 @@ const userfront = require("userfront");
 let api = userfront.authorize("meowmeowmeow");
 ```
 
-> Make sure to replace `ub_live_admin_...` with your Project Token.
+> Make sure to replace `uf_live_admin_abcdef_123456abcdef` with your Project Token.
 
 <a href="#" id="show-token">Show your Project Token</a>
 
@@ -47,163 +47,371 @@ Userfront uses API keys to allow access to the API. You can register a new Userf
 
 Userfront expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: Bearer ub_live_admin_abcdef_1234567890abcdefghijklmnopqrstuvwxyz`
+`Authorization: Bearer uf_live_admin_abcdef_123456abcdef`
 
 <aside class="notice">
-You must replace <code>ub_live_admin_abcdef_1234567890abcdefghijklmnopqrstuvwxyz</code> with your Project Token.
+You must replace <code>uf_live_admin_abcdef_123456abcdef</code> with your Project Token.
 </aside>
 
 # Users
 
-## Find Users
+## Create a user
 
 ```shell
-curl "https://api.userfront.com/v0/users/find"
-  -H "Authorization: Bearer ub_live_admin_abcdef_1234567890abcdefghijklmnopqrstuvwxyz"
+curl -X "POST" "https://api.userfront.com/v0/users" \
+     -H 'Authorization: Bearer uf_live_admin_abcdef_123456abcdef' \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+          "email": "johnny@example.com",
+          "username": "johnny1234",
+          "name": "Johnny Appleseed",
+          "image": "https://example.com/avatar.png",
+          "authorization": "member",
+          "locked": false
+        }'
 ```
 
 ```javascript
-var request = require("request");
-
-var payload = {
-  json: true,
-  uri: "https://api.userfront.com/v0/users/find",
-  body: {
-    order: "createdAt_DESC",
-    where: {
-      name: { $iLike: "%Sample%" }
-    },
-    page: 1
-  },
+axios({
+  method: "POST",
+  url: "https://api.userfront.com/v0/users",
   headers: {
-    authorization:
-      "Bearer ub_live_admin_abcdef_1234567890abcdefghijklmnopqrstuvwxyz"
+    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
+    "Content-Type": "application/json; charset=utf-8"
+  },
+  data: {
+    email: "johnny@example.com",
+    username: "johnny1234",
+    name: "Johnny Appleseed",
+    image: "https://example.com/avatar.png",
+    authorization: "member",
+    locked: false
   }
-};
-
-request.post(payload, function(err, res, body) {
-  if (err) return console.error(err);
-  console.log(body);
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above request returns a JSON response:
+
+```json
+{
+  "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
+  "userId": 1,
+  "username": "johnny1234",
+  "email": "johnny@example.com",
+  "name": "Johnny Appleseed",
+  "image": "https://example.com/avatar.png",
+  "authorization": "member",
+  "locked": false,
+  "isDev": false,
+  "isConfirmed": false,
+  "lastActiveAt": null,
+  "createdAt": "2020-03-02T23:06:23.603Z",
+  "updatedAt": "2020-03-02T23:06:23.603Z",
+  "project": {
+    "eid": "n8bjpqb7",
+    "name": "Acme Widgets Inc.",
+    "image": "https://res.cloudinary.com/component/image/upload/avatars/icon-39.png",
+    "liveLoginRedirectUrl": "/dashboard",
+    "liveLogoutRedirectUrl": "/login"
+  }
+}
+```
+
+This endpoint will create a new user with the provided payload.
+
+### HTTP Request
+
+`POST https://api.userfront.com/v0/users/`
+
+### Body Parameters
+
+| Parameter     | Type    | Description                                                                                         |
+| ------------- | ------- | --------------------------------------------------------------------------------------------------- |
+| email         | String  | The user's email address                                                                            |
+| username      | String  | The user's username                                                                                 |
+| name          | String  | The user's first and last name                                                                      |
+| image         | String  | A URL to the user's image or avatar                                                                 |
+| authorization | String  | A custom string of your choice to denote user's access level e.g. 'member', 'admin', 'viewer', etc. |
+| locked        | Boolean | If the user's account should be disabled by default                                                 |
+
+## Create or update a user
+
+```shell
+curl -X "POST" "https://api.userfront.com/v0/users/createOrUpdate" \
+     -H 'Authorization: Bearer uf_live_admin_abcdef_123456abcdef' \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+          "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
+          "email": "updated-johnny@example.com",
+          "username": "johnny1234-updated",
+          "name": "Johnny Appleseed Updated",
+          "image": "https://example.com/avatar-updated.png",
+          "authorization": "admin",
+          "locked": true
+        }'
+```
+
+```javascript
+axios({
+  method: "POST",
+  url: "https://api.userfront.com/v0/users/createOrUpdate",
+  headers: {
+    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
+    "Content-Type": "application/json; charset=utf-8"
+  },
+  data: {
+    uuid: "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
+    email: "updated-johnny@example.com",
+    username: "johnny1234-updated",
+    name: "Johnny Appleseed Updated",
+    image: "https://example.com/avatar-updated.png",
+    authorization: "admin",
+    locked: true
+  }
+});
+```
+
+> The above request returns a JSON response:
+
+```json
+{
+  "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
+  "userId": 1,
+  "username": "johnny1234-updated",
+  "email": "updated-johnny@example.com",
+  "name": "Johnny Appleseed Updated",
+  "image": "https://example.com/avatar-updated.png",
+  "authorization": "admin",
+  "locked": true,
+  "isDev": false,
+  "isConfirmed": false,
+  "lastActiveAt": null,
+  "createdAt": "2020-03-02T23:06:23.603Z",
+  "updatedAt": "2020-03-02T23:16:50.957Z",
+  "project": {
+    "eid": "n8bjpqb7",
+    "name": "Acme Widgets Inc.",
+    "image": "https://res.cloudinary.com/component/image/upload/avatars/icon-39.png",
+    "liveLoginRedirectUrl": "/dashboard",
+    "liveLogoutRedirectUrl": "/login"
+  }
+}
+```
+
+This endpoint will update a user if their UUID is provided. If no UUID is provided or the user with provided UUID is not found, a new user will be created with the provided payload (as in `POST https://api.userfront.com/v0/users/`).
+
+### HTTP Request
+
+`POST https://api.userfront.com/v0/users/createOrUpdate`
+
+### Body Parameters
+
+| Parameter     | Type    | Description                                                                                         |
+| ------------- | ------- | --------------------------------------------------------------------------------------------------- |
+| uuid          | String  | The UUID of the user to update                                                                      |
+| email         | String  | The user's email address                                                                            |
+| username      | String  | The user's username                                                                                 |
+| name          | String  | The user's first and last name                                                                      |
+| image         | String  | A URL to the user's image or avatar                                                                 |
+| authorization | String  | A custom string of your choice to denote user's access level e.g. 'member', 'admin', 'viewer', etc. |
+| locked        | Boolean | If the user's account should be disabled by default                                                 |
+
+## Create and invite a user
+
+```shell
+curl -X "POST" "https://api.userfront.com/v0/users/invite" \
+     -H 'Authorization: Bearer uf_live_admin_abcdef_123456abcdef' \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+          "email": "mike@example.com",
+          "username": "mike123",
+          "locked": false,
+          "authorization": "member",
+          "name": "Mike Appleseed",
+          "image": "https://example.com/avatar.png"
+        }'
+```
+
+```javascript
+axios({
+  method: "POST",
+  url: "https://api.userfront.com/v0/users/invite",
+  headers: {
+    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
+    "Content-Type": "application/json; charset=utf-8"
+  },
+  data: {
+    email: "mike@example.com",
+    username: "mike123",
+    locked: false,
+    authorization: "member",
+    name: "Mike Appleseed",
+    image: "https://example.com/avatar.png"
+  }
+});
+```
+
+> The above request returns a JSON response:
+
+```json
+{
+  "uuid": "41a0cde9-750e-4d2d-aad1-4bf9f25a233c",
+  "userId": 2,
+  "username": "mike123",
+  "email": "mike@example.com",
+  "name": "Mike Appleseed",
+  "image": "https://example.com/avatar.png",
+  "authorization": "member",
+  "locked": false,
+  "isDev": false,
+  "isConfirmed": false,
+  "lastActiveAt": null,
+  "createdAt": "2020-03-02T23:32:56.120Z",
+  "updatedAt": "2020-03-02T23:32:56.120Z",
+  "project": {
+    "eid": "n8bjpqb7",
+    "name": "Acme Widgets Inc.",
+    "image": "https://res.cloudinary.com/component/image/upload/avatars/icon-39.png",
+    "liveLoginRedirectUrl": "/dashboard",
+    "liveLogoutRedirectUrl": "/login"
+  }
+}
+```
+
+This endpoint will create a user and send the new user an invite email to the email provided in the payload.
+
+### HTTP Request
+
+`POST https://api.userfront.com/v0/users/invite`
+
+### Body Parameters
+
+| Parameter     | Type    | Description                                                                                         |
+| ------------- | ------- | --------------------------------------------------------------------------------------------------- |
+| email         | String  | The user's email address                                                                            |
+| username      | String  | The user's username                                                                                 |
+| name          | String  | The user's first and last name                                                                      |
+| image         | String  | A URL to the user's image or avatar                                                                 |
+| authorization | String  | A custom string of your choice to denote user's access level e.g. 'member', 'admin', 'viewer', etc. |
+| locked        | Boolean | If the user's account should be disabled by default                                                 |
+
+## Fetch users
+
+```shell
+curl -X "POST" "https://api.userfront.com/v0/users/find" \
+     -H 'Authorization: Bearer uf_live_admin_abcdef_123456abcdef' \
+```
+
+```javascript
+axios({
+  method: "POST",
+  url: "https://api.userfront.com/v0/users/find",
+  headers: {
+    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef"
+  },
+  data: {}
+});
+```
+
+> The above request returns a JSON response:
 
 ```json
 {
   "results": [
     {
-      "userId": 1,
-      "uuid": "6ab6de7b-5990-4d97-88be-0c7a981aa92e",
-      "email": "user@example.com",
-      "username": "exampleuser",
-      "name": "Sample User",
-      "image": "https://res.cloudinary.com/component/image/upload/avatars/avatar-03.png",
+      "isConfirmed": false,
+      "uuid": "41a0cde9-750e-4d2d-aad1-4bf9f25a233c",
+      "isDev": false,
+      "email": "mike@example.com",
+      "username": "mike123",
+      "name": "Mike Appleseed",
+      "image": "https://example.com/avatar.png",
       "authorization": "member",
       "locked": false,
-      "createdAt": "2020-01-27T15:16:39.955Z",
       "confirmedAt": null,
-      "lastActiveAt": "2020-01-28T16:30:45.948Z"
+      "lastActiveAt": null,
+      "lastMessagedAt": null,
+      "createdAt": "2020-03-02T23:32:56.120Z",
+      "userId": 2
+    },
+    {
+      "isConfirmed": false,
+      "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
+      "isDev": false,
+      "email": "updated-johnny@example.com",
+      "username": "johnny1234-updated",
+      "name": "Johnny Appleseed Updated",
+      "image": "https://example.com/avatar-updated.png",
+      "authorization": "admin",
+      "locked": true,
+      "confirmedAt": null,
+      "lastActiveAt": null,
+      "lastMessagedAt": null,
+      "createdAt": "2020-03-02T23:06:23.603Z",
+      "userId": 1
     }
-    ...
+    // ...more users
   ],
+  "totalCount": 7,
   "meta": {
-    "count": 24,
-    "totalCount": 100,
-    "totalPages": 5
+    "count": 7,
+    "totalCount": 7,
+    "totalPages": 7,
+    "next": "/users/find",
+    "previous": "/users/find",
+    "self": "/users/find",
+    "first": "/users/find",
+    "last": "/users/find"
   }
 }
 ```
 
-This endpoint finds users based on criteria in the request `body`. To retrieve all users, omit the `body` attribute.
+This endpoint will find users in your project based on the query parameters provided. All of the user attributes are available to query against and order on.
 
 ### HTTP Request
 
 `POST https://api.userfront.com/v0/users/find`
 
-### Body Parameters
+### Query Parameters
 
-| Parameter | Default             | Description                            |
-| --------- | ------------------- | -------------------------------------- |
-| order     | `lastActiveAt_DESC` | The order users should be returned in. |
-| where     | `{}`                | A query object based on Sequelize.     |
+| Parameter | Type   | Description                                                                                                                          |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| where     | JSON   | A [Sequelize-style](https://sequelize.org/v5/manual/querying.html#where) query e.g. where="{\"name\":{\"\$iLike\":\"%appleseed%\"}}" |
+| order     | String | How results should be returned with attribute_ORDER format e.g. order=lastActiveAt_ASC OR order=username_DESC                        |
+| page      | String | The page of results to be returned e.g. page=3                                                                                       |
 
-<aside class="success">
-Remember — finding users is fun
-</aside>
-
-## Get a Specific User
+## Update user's last active time
 
 ```shell
-curl "http://example.com/api/users/2"
-  -H "Authorization: meowmeowmeow"
+curl -X "PUT" "https://api.userfront.com/v0/users/2/active" \
+     -H 'Authorization: Bearer uf_live_admin_abcdef_123456abcdef' \
 ```
 
 ```javascript
-const userfront = require("userfront");
-
-let api = userfront.authorize("meowmeowmeow");
-let max = api.users.get(2);
+axios({
+  method: "PUT",
+  url: "https://api.userfront.com/v0/users/2/active",
+  headers: {
+    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef"
+  },
+  data: {}
+});
 ```
 
-> The above command returns JSON structured like this:
+> The above request returns a JSON response:
 
 ```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
+{ "message": "ok", "lastActiveAt": "2020-03-03T00:21:10.323Z" }
 ```
 
-This endpoint retrieves a specific user.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint will update the user's `lastActiveAt` property to the time the request is made.
 
 ### HTTP Request
 
-`GET http://example.com/users/<ID>`
+`PUT https://api.userfront.com/v0/users/:userId/active`
 
 ### URL Parameters
 
-| Parameter | Description                    |
-| --------- | ------------------------------ |
-| ID        | The ID of the user to retrieve |
-
-## Delete a Specific User
-
-```shell
-curl "http://example.com/api/users/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const userfront = require("userfront");
-
-let api = userfront.authorize("meowmeowmeow");
-let max = api.users.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted": ":("
-}
-```
-
-This endpoint deletes a specific user.
-
-### HTTP Request
-
-`DELETE http://example.com/users/<ID>`
-
-### URL Parameters
-
-| Parameter | Description                  |
-| --------- | ---------------------------- |
-| ID        | The ID of the user to delete |
+| Parameter | Type    | Description                  |
+| --------- | ------- | ---------------------------- |
+| userId    | Integer | The ID of the user to update |
