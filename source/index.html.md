@@ -17,11 +17,9 @@ search: true
 
 # Introduction
 
-You can use the Userfront API to get information and perform actions on various users in your project.
+<aside class="notice">These docs are for using the API. See the <a href="https://guide.userfront.com" target="_blank">Guide</a> for general information and to set up Userfront.</aside>
 
-We have language bindings in Shell (Terminal) and JavaScript. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-<aside class="warning">These docs aren't quite ready yet. Check back soon!</aside>
+You can use the Userfront API to programmatically get information and perform actions on user records in your project.
 
 # Authentication
 
@@ -34,23 +32,28 @@ curl "https://api.userfront.com/v0/status"
 ```
 
 ```javascript
-const userfront = require("userfront");
-
-let api = userfront.authorize("meowmeowmeow");
+axios({
+  method: "GET",
+  url: "https://api.userfront.com/v0/status",
+  headers: {
+    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
+    "Content-Type": "application/json; charset=utf-8"
+  }
+});
 ```
 
 > Make sure to replace `uf_live_admin_abcdef_123456abcdef` with your Project Token.
 
-<a href="#" id="show-token">Show your Project Token</a>
+<!-- <a href="#" id="show-token">Show your Project Token</a> -->
 
-Userfront uses API keys to allow access to the API. You can register a new Userfront API key at our [developer portal](http://example.com/developers).
+Userfront uses API keys called "Project Tokens" to allow your project access to the API. You can find Admin and Readonly Project Tokens for your project in the Settings section of the Userfront [dashboard](https://userfront.com/projects).
 
-Userfront expects for the API key to be included in all API requests to the server in a header that looks like the following:
+Userfront expects the Project Token to be included in all API requests to the server in a header that looks like the following:
 
 `Authorization: Bearer uf_live_admin_abcdef_123456abcdef`
 
 <aside class="notice">
-You must replace <code>uf_live_admin_abcdef_123456abcdef</code> with your Project Token.
+Replace <code>uf_live_admin_abcdef_123456abcdef</code> with your Project Token.
 </aside>
 
 # Users
