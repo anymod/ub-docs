@@ -37,8 +37,8 @@ axios({
   url: "https://api.userfront.com/v0/status",
   headers: {
     Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
-    "Content-Type": "application/json; charset=utf-8"
-  }
+    "Content-Type": "application/json; charset=utf-8",
+  },
 });
 ```
 
@@ -80,7 +80,7 @@ axios({
   url: "https://api.userfront.com/v0/users",
   headers: {
     Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
-    "Content-Type": "application/json; charset=utf-8"
+    "Content-Type": "application/json; charset=utf-8",
   },
   data: {
     email: "johnny@example.com",
@@ -88,8 +88,8 @@ axios({
     name: "Johnny Appleseed",
     image: "https://example.com/avatar.png",
     authorization: "member",
-    locked: false
-  }
+    locked: false,
+  },
 });
 ```
 
@@ -97,8 +97,8 @@ axios({
 
 ```json
 {
-  "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
   "userId": 1,
+  "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
   "username": "johnny1234",
   "email": "johnny@example.com",
   "name": "Johnny Appleseed",
@@ -107,7 +107,6 @@ axios({
   "locked": false,
   "isDev": false,
   "isConfirmed": false,
-  "lastActiveAt": null,
   "createdAt": "2020-03-02T23:06:23.603Z",
   "updatedAt": "2020-03-02T23:06:23.603Z",
   "project": {
@@ -160,7 +159,7 @@ axios({
   url: "https://api.userfront.com/v0/users/createOrUpdate",
   headers: {
     Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
-    "Content-Type": "application/json; charset=utf-8"
+    "Content-Type": "application/json; charset=utf-8",
   },
   data: {
     uuid: "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
@@ -169,8 +168,8 @@ axios({
     name: "Johnny Appleseed Updated",
     image: "https://example.com/avatar-updated.png",
     authorization: "admin",
-    locked: true
-  }
+    locked: true,
+  },
 });
 ```
 
@@ -178,8 +177,8 @@ axios({
 
 ```json
 {
-  "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
   "userId": 1,
+  "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
   "username": "johnny1234-updated",
   "email": "updated-johnny@example.com",
   "name": "Johnny Appleseed Updated",
@@ -188,7 +187,6 @@ axios({
   "locked": true,
   "isDev": false,
   "isConfirmed": false,
-  "lastActiveAt": null,
   "createdAt": "2020-03-02T23:06:23.603Z",
   "updatedAt": "2020-03-02T23:16:50.957Z",
   "project": {
@@ -241,7 +239,7 @@ axios({
   url: "https://api.userfront.com/v0/users/invite",
   headers: {
     Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
-    "Content-Type": "application/json; charset=utf-8"
+    "Content-Type": "application/json; charset=utf-8",
   },
   data: {
     email: "mike@example.com",
@@ -249,8 +247,8 @@ axios({
     locked: false,
     authorization: "member",
     name: "Mike Appleseed",
-    image: "https://example.com/avatar.png"
-  }
+    image: "https://example.com/avatar.png",
+  },
 });
 ```
 
@@ -258,8 +256,8 @@ axios({
 
 ```json
 {
-  "uuid": "41a0cde9-750e-4d2d-aad1-4bf9f25a233c",
   "userId": 2,
+  "uuid": "41a0cde9-750e-4d2d-aad1-4bf9f25a233c",
   "username": "mike123",
   "email": "mike@example.com",
   "name": "Mike Appleseed",
@@ -268,7 +266,6 @@ axios({
   "locked": false,
   "isDev": false,
   "isConfirmed": false,
-  "lastActiveAt": null,
   "createdAt": "2020-03-02T23:32:56.120Z",
   "updatedAt": "2020-03-02T23:32:56.120Z",
   "project": {
@@ -310,9 +307,9 @@ axios({
   method: "POST",
   url: "https://api.userfront.com/v0/users/find",
   headers: {
-    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef"
+    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
   },
-  data: {}
+  data: {},
 });
 ```
 
@@ -322,36 +319,30 @@ axios({
 {
   "results": [
     {
-      "isConfirmed": false,
+      "userId": 2,
       "uuid": "41a0cde9-750e-4d2d-aad1-4bf9f25a233c",
-      "isDev": false,
       "email": "mike@example.com",
       "username": "mike123",
       "name": "Mike Appleseed",
       "image": "https://example.com/avatar.png",
+      "isConfirmed": false,
+      "isDev": false,
       "authorization": "member",
       "locked": false,
-      "confirmedAt": null,
-      "lastActiveAt": null,
-      "lastMessagedAt": null,
-      "createdAt": "2020-03-02T23:32:56.120Z",
-      "userId": 2
+      "createdAt": "2020-03-02T23:32:56.120Z"
     },
     {
-      "isConfirmed": false,
+      "userId": 1,
       "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
-      "isDev": false,
       "email": "updated-johnny@example.com",
       "username": "johnny1234-updated",
       "name": "Johnny Appleseed Updated",
       "image": "https://example.com/avatar-updated.png",
+      "isConfirmed": false,
+      "isDev": false,
       "authorization": "admin",
       "locked": true,
-      "confirmedAt": null,
-      "lastActiveAt": null,
-      "lastMessagedAt": null,
-      "createdAt": "2020-03-02T23:06:23.603Z",
-      "userId": 1
+      "createdAt": "2020-03-02T23:06:23.603Z"
     }
     // ...more users
   ],
@@ -383,7 +374,7 @@ This endpoint will find users in your project based on the query parameters prov
 | order     | String | How results should be returned with attribute_ORDER format e.g. order=lastActiveAt_ASC OR order=username_DESC                        |
 | page      | String | The page of results to be returned e.g. page=3                                                                                       |
 
-## Update user's last active time
+## Record a user's activity
 
 ```shell
 curl -X "PUT" "https://api.userfront.com/v0/users/2/active" \
@@ -395,9 +386,9 @@ axios({
   method: "PUT",
   url: "https://api.userfront.com/v0/users/2/active",
   headers: {
-    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef"
+    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
   },
-  data: {}
+  data: {},
 });
 ```
 
@@ -407,7 +398,9 @@ axios({
 { "message": "ok", "lastActiveAt": "2020-03-03T00:21:10.323Z" }
 ```
 
-This endpoint will update the user's `lastActiveAt` property to the time the request is made.
+This endpoint is used to record a user's activity, which will then show in project analytics like Cohort Analysis and Calendar Heatmaps.
+
+Each request will also update the user's `lastActiveAt` property to the time the request is made.
 
 ### HTTP Request
 
