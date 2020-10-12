@@ -6,8 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - javascript
 
 toc_footers:
-  - <a href='https://userfront.com/signup'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href='https://userfront.com/signup'>Create a project</a>
 
 includes:
   - errors
@@ -17,18 +16,18 @@ search: true
 
 # Introduction
 
-<aside class="notice">These docs are for using the API. See the <a href="https://guide.userfront.com" target="_blank">Guide</a> for general information and to set up Userfront.</aside>
+<aside class="notice">These docs are for using the Userfront API. See the <a href="https://userfront.com/guide" target="_blank">Guide</a> for general information and to set up Userfront.</aside>
 
-You can use the Userfront API to programmatically get information and perform actions on user records in your project.
+You can use the Userfront API to programmatically read and manipulate user, tenant, and role records in your project.
 
 # Authentication
 
-> To authorize, use your Project Token as a bearer token:
+> To authenticate, use your project's API key in the Authorization header:
 
 ```shell
-# With shell, you can just pass the correct header with each request
+# With shell, you can pass the correct header with each request
 curl "https://api.userfront.com/v0/status"
-  -H "Authorization: Bearer uf_live_admin_abcdef_123456abcdef"
+  -H "Authorization: Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q"
 ```
 
 ```javascript
@@ -36,24 +35,24 @@ axios({
   method: "GET",
   url: "https://api.userfront.com/v0/status",
   headers: {
-    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
+    Authorization: "Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q",
     "Content-Type": "application/json; charset=utf-8",
   },
 });
 ```
 
-> Make sure to replace `uf_live_admin_abcdef_123456abcdef` with your Project Token.
+> Make sure to replace `uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q` with your API key.
 
-<!-- <a href="#" id="show-token">Show your Project Token</a> -->
+<!-- <a href="#" id="show-key">Show your API key</a> -->
 
-Userfront uses API keys called "Project Tokens" to allow your project access to the API. You can find Admin and Readonly Project Tokens for your project in the Settings section of the Userfront [dashboard](https://userfront.com/projects).
+Userfront uses API keys to allow your project access to the API. You can find Admin and Readonly API keys for your project in the Settings section of the Userfront [dashboard](https://userfront.com/projects).
 
-Userfront expects the Project Token to be included in all API requests to the server in a header that looks like the following:
+Userfront expects the API key to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: Bearer uf_live_admin_abcdef_123456abcdef`
+`Authorization: Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q`
 
 <aside class="notice">
-Replace <code>uf_live_admin_abcdef_123456abcdef</code> with your Project Token.
+Replace <code>uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q</code> with your API key.
 </aside>
 
 # Users
@@ -61,15 +60,14 @@ Replace <code>uf_live_admin_abcdef_123456abcdef</code> with your Project Token.
 ## Create a user
 
 ```shell
-curl -X "POST" "https://api.userfront.com/v0/users" \
-     -H 'Authorization: Bearer uf_live_admin_abcdef_123456abcdef' \
+curl -X "POST" "https://api.userfront.com/v0/tenants/abcdefgh/users" \
+     -H 'Authorization: Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q' \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
           "email": "johnny@example.com",
           "username": "johnny1234",
           "name": "Johnny Appleseed",
           "image": "https://example.com/avatar.png",
-          "authorization": "member",
           "locked": false
         }'
 ```
@@ -77,9 +75,9 @@ curl -X "POST" "https://api.userfront.com/v0/users" \
 ```javascript
 axios({
   method: "POST",
-  url: "https://api.userfront.com/v0/users",
+  url: "https://api.userfront.com/v0/tenants/abcdefgh/users",
   headers: {
-    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
+    Authorization: "Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q",
     "Content-Type": "application/json; charset=utf-8",
   },
   data: {
@@ -87,7 +85,6 @@ axios({
     username: "johnny1234",
     name: "Johnny Appleseed",
     image: "https://example.com/avatar.png",
-    authorization: "member",
     locked: false,
   },
 });
@@ -97,25 +94,25 @@ axios({
 
 ```json
 {
-  "userId": 1,
-  "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
+  "userId": 4,
   "username": "johnny1234",
   "email": "johnny@example.com",
   "name": "Johnny Appleseed",
   "image": "https://example.com/avatar.png",
-  "authorization": "member",
   "locked": false,
   "isDev": false,
   "isConfirmed": false,
-  "createdAt": "2020-03-02T23:06:23.603Z",
-  "updatedAt": "2020-03-02T23:06:23.603Z",
-  "project": {
-    "eid": "n8bjpqb7",
-    "name": "Acme Widgets Inc.",
-    "image": "https://res.cloudinary.com/component/image/upload/avatars/icon-39.png",
-    "liveLoginRedirectUrl": "/dashboard",
-    "liveLogoutRedirectUrl": "/login"
-  }
+  "lastActiveAt": null,
+  "uuid": "2e6b8f41-eb6d-4deb-9d75-6159c4ac4397",
+  "createdAt": "2020-10-12T23:23:17.930Z",
+  "tenant": {
+    "tenantId": "abcdefgh",
+    "name": "Example project",
+    "image": "https://res.cloudinary.com/component/image/upload/avatars/icon-03.png",
+    "loginRedirectPath": "/dashboard",
+    "logoutRedirectPath": "/login"
+  },
+  "authorization": {}
 }
 ```
 
@@ -123,32 +120,30 @@ This endpoint will create a new user with the provided payload.
 
 ### HTTP Request
 
-`POST https://api.userfront.com/v0/users/`
+`POST https://api.userfront.com/v0/tenants/abcdefgh/users/`
 
 ### Body Parameters
 
-| Parameter     | Type    | Description                                                                                         |
-| ------------- | ------- | --------------------------------------------------------------------------------------------------- |
-| email         | String  | The user's email address                                                                            |
-| username      | String  | The user's username                                                                                 |
-| name          | String  | The user's first and last name                                                                      |
-| image         | String  | A URL to the user's image or avatar                                                                 |
-| authorization | String  | A custom string of your choice to denote user's access level e.g. 'member', 'admin', 'viewer', etc. |
-| locked        | Boolean | If the user's account should be disabled by default                                                 |
+| Parameter | Type    | Description                              |
+| --------- | ------- | ---------------------------------------- |
+| email     | String  | The user's email address                 |
+| username  | String  | The user's username                      |
+| name      | String  | The user's first and last name           |
+| image     | String  | A URL to the user's image or avatar      |
+| locked    | Boolean | If the user's account should be disabled |
 
 ## Create or update a user
 
 ```shell
-curl -X "POST" "https://api.userfront.com/v0/users/createOrUpdate" \
-     -H 'Authorization: Bearer uf_live_admin_abcdef_123456abcdef' \
+curl -X "POST" "https://api.userfront.com/v0/tenants/abcdefgh/users/createOrUpdate" \
+     -H 'Authorization: Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q' \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-          "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
+          "userId": 4,
           "email": "updated-johnny@example.com",
           "username": "johnny1234-updated",
           "name": "Johnny Appleseed Updated",
           "image": "https://example.com/avatar-updated.png",
-          "authorization": "admin",
           "locked": true
         }'
 ```
@@ -156,18 +151,17 @@ curl -X "POST" "https://api.userfront.com/v0/users/createOrUpdate" \
 ```javascript
 axios({
   method: "POST",
-  url: "https://api.userfront.com/v0/users/createOrUpdate",
+  url: "https://api.userfront.com/v0/tenants/abcdefgh/users/createOrUpdate",
   headers: {
-    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
+    Authorization: "Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q",
     "Content-Type": "application/json; charset=utf-8",
   },
   data: {
-    uuid: "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
+    userId: 4,
     email: "updated-johnny@example.com",
     username: "johnny1234-updated",
     name: "Johnny Appleseed Updated",
     image: "https://example.com/avatar-updated.png",
-    authorization: "admin",
     locked: true,
   },
 });
@@ -177,77 +171,70 @@ axios({
 
 ```json
 {
-  "userId": 1,
-  "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
+  "userId": 4,
   "username": "johnny1234-updated",
   "email": "updated-johnny@example.com",
   "name": "Johnny Appleseed Updated",
   "image": "https://example.com/avatar-updated.png",
-  "authorization": "admin",
   "locked": true,
   "isDev": false,
   "isConfirmed": false,
-  "createdAt": "2020-03-02T23:06:23.603Z",
-  "updatedAt": "2020-03-02T23:16:50.957Z",
-  "project": {
-    "eid": "n8bjpqb7",
-    "name": "Acme Widgets Inc.",
-    "image": "https://res.cloudinary.com/component/image/upload/avatars/icon-39.png",
-    "liveLoginRedirectUrl": "/dashboard",
-    "liveLogoutRedirectUrl": "/login"
-  }
+  "lastActiveAt": null,
+  "uuid": "2e6b8f41-eb6d-4deb-9d75-6159c4ac4397",
+  "createdAt": "2020-10-12T23:23:17.930Z",
+  "tenant": {
+    "tenantId": "abcdefgh",
+    "name": "Example project",
+    "image": "https://res.cloudinary.com/component/image/upload/avatars/icon-03.png",
+    "loginRedirectPath": "/dashboard",
+    "logoutRedirectPath": "/login"
+  },
+  "authorization": {}
 }
 ```
 
-This endpoint will update a user if their UUID is provided. If no UUID is provided or the user with provided UUID is not found, a new user will be created with the provided payload (as in `POST https://api.userfront.com/v0/users/`).
+This endpoint will update a user if their UUID is provided. If no UUID is provided or the user with provided UUID is not found, a new user will be created with the provided payload (as in `POST https://api.userfront.com/v0/tenants/abcdefgh/users/`).
 
 ### HTTP Request
 
-`POST https://api.userfront.com/v0/users/createOrUpdate`
+`POST https://api.userfront.com/v0/tenants/abcdefgh/users/createOrUpdate`
 
 ### Body Parameters
 
-| Parameter     | Type    | Description                                                                                         |
-| ------------- | ------- | --------------------------------------------------------------------------------------------------- |
-| uuid          | String  | The UUID of the user to update                                                                      |
-| email         | String  | The user's email address                                                                            |
-| username      | String  | The user's username                                                                                 |
-| name          | String  | The user's first and last name                                                                      |
-| image         | String  | A URL to the user's image or avatar                                                                 |
-| authorization | String  | A custom string of your choice to denote user's access level e.g. 'member', 'admin', 'viewer', etc. |
-| locked        | Boolean | If the user's account should be disabled by default                                                 |
+| Parameter | Type    | Description                              |
+| --------- | ------- | ---------------------------------------- |
+| userId    | String  | The userId of the user to update         |
+| email     | String  | The user's email address                 |
+| username  | String  | The user's username                      |
+| name      | String  | The user's first and last name           |
+| image     | String  | A URL to the user's image or avatar      |
+| locked    | Boolean | If the user's account should be disabled |
 
 ## Create and invite a user
 
 ```shell
-curl -X "POST" "https://api.userfront.com/v0/users/invite" \
-     -H 'Authorization: Bearer uf_live_admin_abcdef_123456abcdef' \
+curl -X "POST" "https://api.userfront.com/v0/tenants/abcdefgh/users/invite" \
+     -H 'Authorization: Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q' \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
           "email": "mike@example.com",
           "username": "mike123",
-          "locked": false,
-          "authorization": "member",
           "name": "Mike Appleseed",
-          "image": "https://example.com/avatar.png"
         }'
 ```
 
 ```javascript
 axios({
   method: "POST",
-  url: "https://api.userfront.com/v0/users/invite",
+  url: "https://api.userfront.com/v0/tenants/abcdefgh/users/invite",
   headers: {
-    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
+    Authorization: "Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q",
     "Content-Type": "application/json; charset=utf-8",
   },
   data: {
     email: "mike@example.com",
     username: "mike123",
-    locked: false,
-    authorization: "member",
     name: "Mike Appleseed",
-    image: "https://example.com/avatar.png",
   },
 });
 ```
@@ -256,25 +243,25 @@ axios({
 
 ```json
 {
-  "userId": 2,
-  "uuid": "41a0cde9-750e-4d2d-aad1-4bf9f25a233c",
+  "userId": 5,
   "username": "mike123",
   "email": "mike@example.com",
   "name": "Mike Appleseed",
   "image": "https://example.com/avatar.png",
-  "authorization": "member",
   "locked": false,
   "isDev": false,
   "isConfirmed": false,
-  "createdAt": "2020-03-02T23:32:56.120Z",
-  "updatedAt": "2020-03-02T23:32:56.120Z",
-  "project": {
-    "eid": "n8bjpqb7",
-    "name": "Acme Widgets Inc.",
-    "image": "https://res.cloudinary.com/component/image/upload/avatars/icon-39.png",
-    "liveLoginRedirectUrl": "/dashboard",
-    "liveLogoutRedirectUrl": "/login"
-  }
+  "lastActiveAt": null,
+  "uuid": "34e98163-e4c5-488b-86b6-009d315db0d2",
+  "createdAt": "2020-10-12T23:35:42.791Z",
+  "tenant": {
+    "tenantId": "abcdefgh",
+    "name": "Example project",
+    "image": "https://res.cloudinary.com/component/image/upload/avatars/icon-03.png",
+    "loginRedirectPath": "/dashboard",
+    "logoutRedirectPath": "/login"
+  },
+  "authorization": {}
 }
 ```
 
@@ -282,32 +269,31 @@ This endpoint will create a user and send the new user an invite email to the em
 
 ### HTTP Request
 
-`POST https://api.userfront.com/v0/users/invite`
+`POST https://api.userfront.com/v0/tenants/abcdefgh/users/invite`
 
 ### Body Parameters
 
-| Parameter     | Type    | Description                                                                                         |
-| ------------- | ------- | --------------------------------------------------------------------------------------------------- |
-| email         | String  | The user's email address                                                                            |
-| username      | String  | The user's username                                                                                 |
-| name          | String  | The user's first and last name                                                                      |
-| image         | String  | A URL to the user's image or avatar                                                                 |
-| authorization | String  | A custom string of your choice to denote user's access level e.g. 'member', 'admin', 'viewer', etc. |
-| locked        | Boolean | If the user's account should be disabled by default                                                 |
+| Parameter | Type    | Description                              |
+| --------- | ------- | ---------------------------------------- |
+| email     | String  | The user's email address                 |
+| username  | String  | The user's username                      |
+| name      | String  | The user's first and last name           |
+| image     | String  | A URL to the user's image or avatar      |
+| locked    | Boolean | If the user's account should be disabled |
 
 ## Fetch users
 
 ```shell
-curl -X "POST" "https://api.userfront.com/v0/users/find" \
-     -H 'Authorization: Bearer uf_live_admin_abcdef_123456abcdef' \
+curl -X "POST" "https://api.userfront.com/v0/tenants/abcdefgh/users/find" \
+     -H 'Authorization: Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q' \
 ```
 
 ```javascript
 axios({
   method: "POST",
-  url: "https://api.userfront.com/v0/users/find",
+  url: "https://api.userfront.com/v0/tenants/abcdefgh/users/find",
   headers: {
-    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
+    Authorization: "Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q",
   },
   data: {},
 });
@@ -319,38 +305,36 @@ axios({
 {
   "results": [
     {
-      "userId": 2,
-      "uuid": "41a0cde9-750e-4d2d-aad1-4bf9f25a233c",
+      "userId": 5,
       "email": "mike@example.com",
       "username": "mike123",
       "name": "Mike Appleseed",
       "image": "https://example.com/avatar.png",
       "isConfirmed": false,
       "isDev": false,
-      "authorization": "member",
       "locked": false,
+      "uuid": "41a0cde9-750e-4d2d-aad1-4bf9f25a233c",
       "createdAt": "2020-03-02T23:32:56.120Z"
     },
     {
-      "userId": 1,
-      "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
+      "userId": 4,
       "email": "updated-johnny@example.com",
       "username": "johnny1234-updated",
       "name": "Johnny Appleseed Updated",
       "image": "https://example.com/avatar-updated.png",
       "isConfirmed": false,
       "isDev": false,
-      "authorization": "admin",
       "locked": true,
+      "uuid": "09fd26eb-5fe0-4a06-b595-8369aca1d2f8",
       "createdAt": "2020-03-02T23:06:23.603Z"
     }
     // ...more users
   ],
-  "totalCount": 7,
+  "totalCount": 5,
   "meta": {
-    "count": 7,
-    "totalCount": 7,
-    "totalPages": 7,
+    "count": 5,
+    "totalCount": 5,
+    "totalPages": 5,
     "next": "/users/find",
     "previous": "/users/find",
     "self": "/users/find",
@@ -364,7 +348,7 @@ This endpoint will find users in your project based on the query parameters prov
 
 ### HTTP Request
 
-`POST https://api.userfront.com/v0/users/find`
+`POST https://api.userfront.com/v0/tenants/abcdefgh/users/find`
 
 ### Query Parameters
 
@@ -377,16 +361,16 @@ This endpoint will find users in your project based on the query parameters prov
 ## Record a user's activity
 
 ```shell
-curl -X "PUT" "https://api.userfront.com/v0/users/2/active" \
-     -H 'Authorization: Bearer uf_live_admin_abcdef_123456abcdef' \
+curl -X "PUT" "https://api.userfront.com/v0/tenants/abcdefgh/users/2/active" \
+     -H 'Authorization: Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q' \
 ```
 
 ```javascript
 axios({
   method: "PUT",
-  url: "https://api.userfront.com/v0/users/2/active",
+  url: "https://api.userfront.com/v0/tenants/abcdefgh/users/2/active",
   headers: {
-    Authorization: "Bearer uf_live_admin_abcdef_123456abcdef",
+    Authorization: "Bearer uf_live_admin_abcdefgh_1z2x3y4w5v6u7t8s9r0q",
   },
   data: {},
 });
@@ -404,7 +388,7 @@ Each request will also update the user's `lastActiveAt` property to the time the
 
 ### HTTP Request
 
-`PUT https://api.userfront.com/v0/users/:userId/active`
+`PUT https://api.userfront.com/v0/tenants/abcdefgh/users/:userId/active`
 
 ### URL Parameters
 
